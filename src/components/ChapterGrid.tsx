@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { chapters } from "@/data/gitaData";
+import bookCover from "@/assets/book-cover.jpg";
 
 interface ChapterGridProps {
   onChapterClick: (chapterId: number) => void;
@@ -7,8 +8,15 @@ interface ChapterGridProps {
 
 export const ChapterGrid = ({ onChapterClick }: ChapterGridProps) => {
   return (
-    <section className="py-20 px-4 wood-texture">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 px-4 bg-parchment relative overflow-hidden">
+      {/* Decorative Background Pattern */}
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, hsl(var(--ink)) 35px, hsl(var(--ink)) 36px)',
+        }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -16,67 +24,78 @@ export const ChapterGrid = ({ onChapterClick }: ChapterGridProps) => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="font-cinzel text-4xl md:text-5xl text-primary gold-glow mb-4">
-            Ancient Chapters
+          <h2 className="font-cinzel text-5xl md:text-6xl text-primary mb-4 tracking-wider">
+            GITA CHAPTERS
           </h2>
-          <p className="font-crimson text-lg text-foreground/80">
-            Discover the eternal wisdom preserved through centuries
-          </p>
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <span className="w-24 h-px bg-primary/40" />
+            <span className="text-primary text-2xl">❖</span>
+            <span className="w-24 h-px bg-primary/40" />
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Chapter Books Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
           {chapters.map((chapter, index) => (
             <motion.button
               key={chapter.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.8, rotateZ: -10 }}
+              whileInView={{ opacity: 1, scale: 1, rotateZ: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: index * 0.05,
+                type: "spring",
+                stiffness: 100 
+              }}
               whileHover={{ 
-                y: -8, 
-                scale: 1.02,
+                scale: 1.15,
+                rotateZ: 5,
+                y: -10,
                 transition: { duration: 0.3 }
               }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => onChapterClick(chapter.id)}
-              className="group relative p-8 bg-card border-2 border-primary/30 rounded-lg overflow-hidden ancient-shadow hover:gold-border transition-all duration-300"
+              className="group relative"
             >
-              {/* Ornamental Corners */}
-              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-primary/50" />
-              <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-primary/50" />
-              <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-primary/50" />
-              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-primary/50" />
-
-              {/* Glow Effect on Hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-primary/10 group-hover:to-primary/5 transition-all duration-500" />
-
-              <div className="relative z-10">
-                {/* Chapter Number */}
-                <div className="inline-block px-4 py-1 mb-4 bg-primary/20 border border-primary/40 rounded-full">
-                  <span className="font-cinzel text-primary text-sm">
-                    Chapter {chapter.id}
-                  </span>
+              {/* Diamond/Book Shape Container */}
+              <div className="relative aspect-square">
+                {/* Diamond Background */}
+                <div className="absolute inset-0 rotate-45 overflow-hidden rounded-lg shadow-2xl border-4 border-primary/60 group-hover:border-primary group-hover:shadow-[0_0_30px_rgba(234,179,8,0.6)] transition-all duration-300">
+                  {/* Book Cover Image */}
+                  <div className="w-full h-full -rotate-45 scale-150">
+                    <img 
+                      src={bookCover} 
+                      alt={`Chapter ${chapter.id}`}
+                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                    />
+                  </div>
+                  
+                  {/* Overlay Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-ink/40 group-hover:from-primary/30 transition-all duration-300" />
                 </div>
 
-                {/* Sanskrit Title */}
-                <h3 className="font-sanskrit text-2xl text-primary mb-3 group-hover:gold-glow transition-all duration-300">
-                  {chapter.title}
-                </h3>
+                {/* Chapter Number - Centered */}
+                <div className="absolute inset-0 flex items-center justify-center z-10">
+                  <div className="bg-parchment/95 border-2 border-primary rounded-full w-16 h-16 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-primary group-hover:border-primary-foreground transition-all duration-300">
+                    <span className="font-cinzel text-2xl font-bold text-ink group-hover:text-primary-foreground">
+                      {chapter.id}
+                    </span>
+                  </div>
+                </div>
 
-                {/* English Subtitle */}
-                <p className="font-crimson text-base text-foreground/70 mb-4">
-                  {chapter.subtitle}
-                </p>
-
-                {/* Verse Count */}
-                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                  <span className="w-8 h-px bg-primary/30" />
-                  <span className="font-cinzel">{chapter.shlokas.length} Verses</span>
-                  <span className="w-8 h-px bg-primary/30" />
+                {/* Glow Effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div className="absolute inset-0 rotate-45 rounded-lg blur-xl bg-primary/30" />
                 </div>
               </div>
 
-              {/* Shine Effect */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
+              {/* Chapter Title Below */}
+              <div className="mt-4 text-center">
+                <p className="font-sanskrit text-sm text-ink/80 group-hover:text-primary transition-colors">
+                  {chapter.shortTitle || `अध्याय ${chapter.id}`}
+                </p>
+              </div>
             </motion.button>
           ))}
         </div>
