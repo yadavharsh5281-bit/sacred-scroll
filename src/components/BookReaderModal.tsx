@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Volume2, Maximize, Type } from "lucide-react";
 import { chapters } from "@/data/gitaData";
 
 interface BookReaderModalProps {
@@ -10,6 +10,8 @@ interface BookReaderModalProps {
 
 export const BookReaderModal = ({ chapterId, onClose }: BookReaderModalProps) => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [fontSize, setFontSize] = useState(20);
+  const [showControls, setShowControls] = useState(false);
   const chapter = chapterId ? chapters.find(c => c.id === chapterId) : null;
 
   useEffect(() => {
@@ -88,16 +90,85 @@ export const BookReaderModal = ({ chapterId, onClose }: BookReaderModalProps) =>
             className="relative max-w-6xl w-full"
             style={{ perspective: "2000px" }}
           >
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={onClose}
-              className="absolute -top-12 right-0 w-10 h-10 flex items-center justify-center bg-primary/20 border border-primary rounded-full text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 z-10"
-              aria-label="Close book"
-            >
-              <X className="w-5 h-5" />
-            </motion.button>
+            {/* Top Controls Bar */}
+            <div className="absolute -top-16 left-0 right-0 flex items-center justify-between">
+              {/* Font Size Control */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowControls(!showControls)}
+                className="flex items-center gap-2 px-4 py-2 bg-primary/20 border border-primary rounded-full text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                <Type className="w-4 h-4" />
+                <span className="font-cinzel text-sm">Font: {fontSize}px</span>
+              </motion.button>
+
+              {/* Verse Selector */}
+              <div className="flex items-center gap-2">
+                <span className="font-cinzel text-primary text-sm">Verse:</span>
+                <select
+                  value={currentPage}
+                  onChange={(e) => setCurrentPage(Number(e.target.value))}
+                  className="px-3 py-1 bg-card border border-primary rounded-full text-primary font-cinzel text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                >
+                  {chapter?.shlokas.map((_, idx) => (
+                    <option key={idx} value={idx}>
+                      {idx + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Additional Controls */}
+              <div className="flex items-center gap-2">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 bg-primary/20 border border-primary rounded-full text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                  title="Audio"
+                >
+                  <Volume2 className="w-4 h-4" />
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 bg-primary/20 border border-primary rounded-full text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                  title="Fullscreen"
+                >
+                  <Maximize className="w-4 h-4" />
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={onClose}
+                  className="p-2 bg-primary/20 border border-primary rounded-full text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                  aria-label="Close book"
+                >
+                  <X className="w-4 h-4" />
+                </motion.button>
+              </div>
+            </div>
+
+            {/* Font Size Slider */}
+            {showControls && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute -top-28 left-0 bg-card border border-primary rounded-lg p-4 shadow-xl"
+              >
+                <label className="flex items-center gap-4">
+                  <span className="font-cinzel text-sm text-foreground">Size:</span>
+                  <input
+                    type="range"
+                    min="14"
+                    max="32"
+                    value={fontSize}
+                    onChange={(e) => setFontSize(Number(e.target.value))}
+                    className="w-32"
+                  />
+                </label>
+              </motion.div>
+            )}
 
             {/* Book Pages */}
             <div className="relative bg-card border-4 border-primary rounded-lg shadow-2xl overflow-hidden">
@@ -126,7 +197,10 @@ export const BookReaderModal = ({ chapterId, onClose }: BookReaderModalProps) =>
                         </span>
                       </div>
                       
-                      <p className="font-sanskrit text-2xl md:text-3xl text-center leading-relaxed text-ink whitespace-pre-line">
+                      <p 
+                        className="font-sanskrit text-center leading-relaxed text-ink whitespace-pre-line"
+                        style={{ fontSize: `${fontSize + 4}px` }}
+                      >
                         {currentShloka.sanskrit}
                       </p>
 
@@ -157,7 +231,10 @@ export const BookReaderModal = ({ chapterId, onClose }: BookReaderModalProps) =>
                         </span>
                       </div>
 
-                      <p className="font-crimson text-xl md:text-2xl text-center leading-relaxed text-ink">
+                      <p 
+                        className="font-crimson text-center leading-relaxed text-ink"
+                        style={{ fontSize: `${fontSize}px` }}
+                      >
                         {currentShloka.translation}
                       </p>
 
