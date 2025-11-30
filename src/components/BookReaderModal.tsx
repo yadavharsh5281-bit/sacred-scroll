@@ -138,6 +138,15 @@ export const BookReaderModal = ({ chapterId, onClose }: BookReaderModalProps) =>
                   <Maximize className="w-4 h-4" />
                 </motion.button>
                 <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onClose}
+                  className="px-4 py-2 bg-primary/20 border border-primary rounded-full text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 font-cinzel text-sm"
+                  aria-label="Cancel"
+                >
+                  Cancel
+                </motion.button>
+                <motion.button
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={onClose}

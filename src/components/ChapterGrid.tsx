@@ -35,7 +35,7 @@ export const ChapterGrid = ({ onChapterClick }: ChapterGridProps) => {
         </motion.div>
 
         {/* Chapter Books Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8 p-4">
           {chapters.map((chapter, index) => (
             <motion.button
               key={chapter.id}
