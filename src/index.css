@@ -8,89 +8,48 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Ancient Bhagavad Gita Color Palette */
+    --background: 30 15% 12%; /* Deep wood brown */
+    --foreground: 40 30% 85%; /* Parchment cream text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 35 25% 20%; /* Wood card surface */
+    --card-foreground: 40 30% 85%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 35 20% 15%;
+    --popover-foreground: 40 30% 85%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 85% 55%; /* Antique gold */
+    --primary-foreground: 30 15% 12%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 25 60% 50%; /* Saffron accent */
+    --secondary-foreground: 30 15% 12%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 30 20% 25%;
+    --muted-foreground: 40 20% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 90% 60%; /* Bright gold for highlights */
+    --accent-foreground: 30 15% 12%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 40 30% 85%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 40 25% 30%;
+    --input: 35 20% 18%;
+    --ring: 45 85% 55%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Parchment page colors */
+    --parchment: 40 35% 88%;
+    --parchment-dark: 38 30% 75%;
+    
+    /* Ancient gold glow */
+    --gold-glow: 45 100% 60%;
+    --gold-shadow: 45 90% 45%;
+    
+    /* Ink colors */
+    --ink: 30 25% 15%;
+    --sanskrit-text: 210 15% 25%;
   }
 }
 
@@ -101,5 +60,94 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Crimson Text', serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+  }
+}
+
+@layer utilities {
+  .font-sanskrit {
+    font-family: 'Tiro Devanagari Sanskrit', serif;
+  }
+
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+
+  .font-crimson {
+    font-family: 'Crimson Text', serif;
+  }
+
+  .text-parchment {
+    color: hsl(var(--parchment));
+  }
+
+  .bg-parchment {
+    background-color: hsl(var(--parchment));
+  }
+
+  .text-ink {
+    color: hsl(var(--ink));
+  }
+
+  .gold-glow {
+    text-shadow: 0 0 20px hsl(var(--gold-glow) / 0.6),
+                 0 0 40px hsl(var(--gold-glow) / 0.4);
+  }
+
+  .gold-border {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 20px hsl(var(--gold-glow) / 0.3);
+  }
+
+  .ancient-shadow {
+    box-shadow: 0 10px 40px -10px hsl(var(--gold-shadow) / 0.5),
+                inset 0 1px 0 hsl(var(--primary) / 0.1);
+  }
+
+  .wood-texture {
+    background-image: 
+      linear-gradient(90deg, transparent 79px, hsl(var(--border) / 0.1) 79px, hsl(var(--border) / 0.1) 81px, transparent 81px),
+      linear-gradient(hsl(var(--background)), hsl(var(--background)));
+  }
+
+  .parchment-texture {
+    background-color: hsl(var(--parchment));
+    background-image: 
+      repeating-linear-gradient(0deg, transparent, transparent 2px, hsl(var(--parchment-dark) / 0.1) 2px, hsl(var(--parchment-dark) / 0.1) 4px);
+  }
+}
+
+@layer components {
+  .ornamental-border {
+    position: relative;
+    border: 2px solid hsl(var(--primary));
+    border-radius: var(--radius);
+  }
+
+  .ornamental-border::before,
+  .ornamental-border::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid hsl(var(--primary));
+  }
+
+  .ornamental-border::before {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .ornamental-border::after {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
   }
 }
